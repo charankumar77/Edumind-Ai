@@ -25,9 +25,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/ai', aiRoutes);
 
-const PORT = process.env.PORT || 5000;
+const parsedPort = parseInt(process.env.PORT || '', 10);
+const PORT = (!isNaN(parsedPort) && parsedPort > 0) ? parsedPort : 10000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
 
