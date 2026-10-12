@@ -58,15 +58,21 @@ router.post('/login', async (req, res) => {
 });
 
 import { OAuth2Client } from 'google-auth-library';
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 router.post('/google', async (req, res) => {
   try {
     const { token, role } = req.body; // Expecting ID token from frontend
+    if (!token) {
+      return res.status(400).json({ message: 'No Google token provided' });
+    }
+
+    const rawClientId = process.env.GOOGLE_CLIENT_ID || '693182096093-kdnqlprq7hei8njonsr7oj43hnf5o4c0.apps.googleusercontent.com';
+    const googleClientId = rawClientId.trim().replace(/^['"]|['"]$/g, '');
+    const client = new OAuth2Client(googleClientId);
     
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
+      audience: googleClientId,
     });
     const payload = ticket.getPayload();
     if (!payload || !payload.email) return res.status(400).json({ message: 'Invalid Google Token' });
@@ -104,8 +110,9 @@ router.post('/google', async (req, res) => {
         picture: user.picture || payload.picture
       }
     });
-  } catch (error) {
-    res.status(500).json({ message: 'Error with Google Auth', error });
+  } catch (error: any) {
+    console.error('Google Auth Error:', error);
+    res.status(500).json({ message: error.message || 'Error with Google Auth' });
   }
 });
 
