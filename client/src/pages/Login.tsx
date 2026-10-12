@@ -16,12 +16,13 @@ export default function Login() {
     setError(null);
     setLoading(true);
     try {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || '';
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
       const body = isLogin 
         ? { email: formData.email, password: formData.password }
         : { name: formData.name, email: formData.email, password: formData.password, role };
 
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const res = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -73,7 +74,8 @@ export default function Login() {
         }
       }
 
-      const res = await fetch('http://localhost:5000/api/auth/google', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
