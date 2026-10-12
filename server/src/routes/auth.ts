@@ -24,8 +24,9 @@ router.post('/register', async (req, res) => {
 
     await user.save();
     res.status(201).json({ message: 'User created successfully' });
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error', error });
+  } catch (error: any) {
+    console.error('Registration error:', error);
+    res.status(500).json({ message: error.message || 'Internal server error' });
   }
 });
 
@@ -50,8 +51,9 @@ router.post('/login', async (req, res) => {
     );
 
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role, picture: user.picture } });
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error', error });
+  } catch (error: any) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: error.message || 'Internal server error' });
   }
 });
 

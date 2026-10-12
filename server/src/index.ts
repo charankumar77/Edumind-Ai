@@ -21,6 +21,15 @@ app.get('/', (req, res) => {
   res.send('Edumind Backend API is running!');
 });
 
+app.get('/health', (req, res) => {
+  const states = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+  res.json({
+    status: 'ok',
+    database: states[mongoose.connection.readyState] || 'unknown',
+    readyState: mongoose.connection.readyState
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/ai', aiRoutes);
