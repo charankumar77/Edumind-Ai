@@ -28,4 +28,6 @@ const TestAttemptSchema: Schema = new Schema({
   timestamp: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-export default mongoose.model<ITestAttempt>('TestAttempt', TestAttemptSchema);
+export default mongoose.models.TestAttempt
+  ? (mongoose.models.TestAttempt as mongoose.Model<ITestAttempt>)
+  : mongoose.model<ITestAttempt>('TestAttempt', TestAttemptSchema);

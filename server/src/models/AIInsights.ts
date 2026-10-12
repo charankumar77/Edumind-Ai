@@ -24,4 +24,6 @@ const AIInsightSchema: Schema = new Schema({
   }]
 }, { timestamps: true });
 
-export default mongoose.model<IAIInsight>('AIInsight', AIInsightSchema);
+export default mongoose.models.AIInsight
+  ? (mongoose.models.AIInsight as mongoose.Model<IAIInsight>)
+  : mongoose.model<IAIInsight>('AIInsight', AIInsightSchema);

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IQuestion extends Document {
   subject: string;
@@ -22,4 +22,8 @@ const QuestionSchema: Schema = new Schema({
   explanation: { type: String }
 }, { timestamps: true });
 
-export default mongoose.model<IQuestion>('Question', QuestionSchema);
+const Question: Model<IQuestion> = mongoose.models.Question
+  ? (mongoose.models.Question as Model<IQuestion>)
+  : mongoose.model<IQuestion>('Question', QuestionSchema);
+
+export default Question;
