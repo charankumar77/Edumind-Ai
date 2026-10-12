@@ -5,8 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/index.ts",
-    "build": "echo 'No build step needed'",
-    "start": "node --import tsx/esm src/index.ts"
+    "build": "tsc",
+    "start": "node dist/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -20,17 +20,17 @@
     "google-auth-library": "^11.2.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.11.1",
-    "tsx": "^4.23.15"
-  },
-  "devDependencies": {
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.6.4"
+  },
+  "devDependencies": {
     "@types/mongoose": "^5.11.96",
-    "@types/node": "^26.6.4",
     "nodemon": "^3.1.14",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "ts-node": "^10.9.2"
   }
 }
